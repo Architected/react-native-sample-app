@@ -49,7 +49,7 @@ const Start = () => {
         }
       }
 
-      console.log('loggedIn:post' + loggedIn);
+      console.log('loggedIn:post:' + loggedIn);
     };
 
     bootstrapAsync();

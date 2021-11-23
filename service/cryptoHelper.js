@@ -15,6 +15,7 @@ export default class CryptoHelper {
   generateCodeVerifier = async () => {
     console.log('CryptoHelper:generateCodeVerifier:start:');
     const code = await this.generateRandomString(100);
+    console.log('CryptoHelper:generateCodeVerifier:finish:' + code);
     return code;
   };
 

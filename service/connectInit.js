@@ -5,6 +5,7 @@ import { ArchitectedConnect } from 'architected-client';
 const connectInit = () => {
   const cryptoHelper = new CryptoHelper();
   const connectInstance = new ArchitectedConnect();
+  console.log(JSON.stringify(architectedConfig));
   connectInstance.init(architectedConfig, cryptoHelper);
 
   return connectInstance.connectService();

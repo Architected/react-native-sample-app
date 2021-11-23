@@ -23,6 +23,11 @@ export default function FilePicker({ navigation }) {
   const [uploadingImage, setUploadingImage] = React.useState(false);
   const [uploadError, setuploadError] = React.useState(null);
 
+  const fileFromPath = (filePath) => {
+    const start = filePath.lastIndexOf('/') + 1;
+    return filePath.substr(start);
+  };
+
   let openImagePickerAsync = async () => {
     dispatch({ type: fileActionType.FILE_CREATE_START });
     setuploadError(null);
@@ -50,16 +55,21 @@ export default function FilePicker({ navigation }) {
 
   let uploadFile = async () => {
     console.log(
-      'uploading image - selectedImage.localUri' + selectedImage.localUri
+      'uploading image - selectedImage.localUri:' + selectedImage.localUri
     );
-    console.log('uploading image - selectedImage' + selectedImage);
+    console.log(
+      'uploading image - selectedImage:' + JSON.stringify(selectedImage)
+    );
+    console.log(
+      'uploading image - name:' + fileFromPath(selectedImage.localUri)
+    );
     var data = {
-      name: 'a',
-      description: 'b',
+      name: 'enter a name',
+      description: 'enter a description',
       file: [
         {
           uri: selectedImage.localUri,
-          name: '9259044-2152-4108-9837-2059c4def3c6.jpg',
+          name: fileFromPath(selectedImage.localUri),
           type: 'image/jpg',
         },
       ],
