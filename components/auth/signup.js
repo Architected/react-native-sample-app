@@ -4,7 +4,7 @@ import { Input, Button } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
 import { StatusBar } from 'expo-status-bar';
 import { Store } from '../../state/storeProvider';
-import { signUpAction } from '../../state/actions/auth/signUpEmail';
+import { iamClient } from '../../service/defaultServices.js';
 import { formStyles } from '../styles';
 import { getClientDetails } from '../../helper/clientHelper';
 
@@ -27,9 +27,9 @@ export default ({ navigation }) => {
       const { email, password } = data;
       const clientDetails = await getClientDetails();
 
-      const response = await signUpAction(
-        email,
-        password,
+      const requestData = { email, password };
+      const responseData = await iamClient.signUp(
+        requestData,
         clientDetails,
         dispatch
       );

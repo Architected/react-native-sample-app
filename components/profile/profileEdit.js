@@ -10,7 +10,7 @@ import { Button, Input } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
 import NavHeader from '../utility/navHeader';
 import { Store } from '../../state/storeProvider';
-import { getProfile, saveProfile } from '../../state/actions/profile';
+import { profileClient } from '../../service/defaultServices';
 
 const editStyles = StyleSheet.create({
   container: {
@@ -49,7 +49,6 @@ function ProfileEdit({ navigation }) {
     isUpdatingItem,
     updatingError,
   } = state['auth'];
-  const {} = state['global'];
 
   const [profile, setProfile] = React.useState({
     globalId: '',
@@ -66,7 +65,7 @@ function ProfileEdit({ navigation }) {
   } = useForm();
 
   React.useEffect(() => {
-    getProfile(dispatch, bearerToken.tokenValue).then((data) => {
+    profileClient.getProfile(dispatch, bearerToken.tokenValue).then((data) => {
       if (data && !data.InError) {
         setProfile(data);
 
@@ -87,7 +86,11 @@ function ProfileEdit({ navigation }) {
       lastName: data.lastName,
     };
     console.log('profileUpdateRequest' + JSON.stringify(profileUpdateRequest));
-    await saveProfile(profileUpdateRequest, dispatch, bearerToken.tokenValue);
+    await profileClient.saveProfile(
+      profileUpdateRequest,
+      dispatch,
+      bearerToken.tokenValue
+    );
 
     navigation.goBack(null);
   };

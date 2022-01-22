@@ -9,8 +9,8 @@ import {
 import { ListItem, Avatar } from 'react-native-elements';
 import NavHeader from '../utility/navHeader';
 import { Store } from '../../state/storeProvider';
-import { getAllFiles } from '../../state/actions/file';
-import { getGridDisplayName } from '../../helper/fileHelper';
+import { getGridDisplayName } from 'architected-client/helper/fileHelper.js';
+import { fileClient } from '../../service/defaultServices';
 
 const listStyles = StyleSheet.create({
   container: {
@@ -36,7 +36,7 @@ function FileListView({ navigation }) {
   }, []);
 
   const reloadHandler = async () => {
-    await getAllFiles(dispatch, bearerToken.tokenValue);
+    await fileClient.getAllFiles(dispatch, bearerToken.tokenValue);
   };
 
   const keyExtractor = (item, index) => item.globalId;

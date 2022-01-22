@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/drawer';
 import AuthenticatedTabNavigator from './authenticatedTabNavigator';
 import ProfileStack from '../profile/profileStack';
-import { signOutAction } from '../../state/actions/auth/signInEmail';
+import { iamClient } from '../../service/defaultServices.js';
 import { Store } from '../../state/storeProvider';
 
 const Drawer = createDrawerNavigator();
@@ -26,7 +26,7 @@ const CustomDrawerContent = (props) => {
         style={{ backgroundColor: '#2C6BED' }}
         onPress={() => {
           console.log('Calling signOutAction');
-          signOutAction(dispatch);
+          iamClient.signOut(dispatch);
         }}
       />
     </DrawerContentScrollView>

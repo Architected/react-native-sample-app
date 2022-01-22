@@ -12,7 +12,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { StatusBar } from 'expo-status-bar';
 import { Store } from '../../state/storeProvider';
 import { formStyles } from '../styles';
-import { startAction } from '../../state/actions/auth/passwordReset';
+import { iamClient } from '../../service/defaultServices.js';
 import { getClientDetails } from '../../helper/clientHelper';
 
 export default ({ navigation }) => {
@@ -32,7 +32,11 @@ export default ({ navigation }) => {
     const { email } = data;
     const clientDetails = await getClientDetails();
     Keyboard.dismiss();
-    const response = await startAction(email, clientDetails, dispatch);
+    const response = await iamClient.passwordResetStart(
+      email,
+      clientDetails,
+      dispatch
+    );
 
     if (response) {
       console.log('screen:response:' + JSON.stringify(response));

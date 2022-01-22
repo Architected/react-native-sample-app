@@ -3,7 +3,7 @@ import { Text, View, Alert, ActivityIndicator, StyleSheet } from 'react-native';
 import { Card, Button, ButtonGroup } from 'react-native-elements';
 import NavHeader from '../utility/navHeader';
 import { Store } from '../../state/storeProvider';
-import { deleteFile, getAllFiles } from '../../state/actions/file';
+import { fileClient } from '../../service/defaultServices';
 
 function FileView({ navigation, route }) {
   const { globalId } = route.params;
@@ -60,7 +60,10 @@ function FileView({ navigation, route }) {
 
   const downloadHandler = () => {
     console.log('Downloading fileGlobalId: ' + file.globalId);
-    const { data } = downloadFileAction(file.globalId, bearerToken.tokenValue);
+    const { data } = fileClient.downloadFile(
+      file.globalId,
+      bearerToken.tokenValue
+    );
   };
 
   const deleteHandler = () =>
@@ -78,8 +81,8 @@ function FileView({ navigation, route }) {
 
   const processDeleteFile = async () => {
     setCurrentFile(null);
-    await deleteFile(globalId, dispatch, bearerToken.tokenValue);
-    await getAllFiles(dispatch, bearerToken.tokenValue);
+    await fileClient.deleteFile(globalId, dispatch, bearerToken.tokenValue);
+    await fileClient.getAllFiles(dispatch, bearerToken.tokenValue);
     navigation.navigate('FileList');
   };
 

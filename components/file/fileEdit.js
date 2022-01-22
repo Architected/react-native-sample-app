@@ -10,7 +10,7 @@ import { Button, Input, ButtonGroup } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
 import NavHeader from '../utility/navHeader';
 import { Store } from '../../state/storeProvider';
-import { updateFileAction } from '../../state/actions/file';
+import { fileClient } from '../../service/defaultServices';
 
 const editStyles = StyleSheet.create({
   container: {
@@ -74,7 +74,11 @@ function FileEdit({ navigation, route }) {
       description: data.description,
     };
     console.log('fileUpdateRequest', JSON.stringify(fileUpdateRequest));
-    await updateFileAction(fileUpdateRequest, dispatch, bearerToken.tokenValue);
+    await fileClient.updateFile(
+      fileUpdateRequest,
+      dispatch,
+      bearerToken.tokenValue
+    );
 
     navigation.navigate('FileList');
   };

@@ -1,8 +1,13 @@
-import connectInit from '../service/connectInit';
+import { connectServiceClient } from 'architected-client';
+import { architectedConfig } from '../architectedConfig';
+import { CryptoHelper } from 'architected-crypto-helper-rn';
+
+const cryptoHelper = new CryptoHelper();
+const connectClient = connectServiceClient;
+connectClient.init(architectedConfig, cryptoHelper);
 
 const startAuthorize = async (codeVerifier, clientDetails) => {
   const { ipAddress, userAgent } = clientDetails;
-
   console.log('calling connect authorize');
 
   var request = {
@@ -10,10 +15,7 @@ const startAuthorize = async (codeVerifier, clientDetails) => {
     ipAddress: ipAddress,
     userAgent: userAgent,
   };
-
-  const connectService = connectInit();
-  const response = await connectService.authorize(request);
-
+  const response = await connectClient.authorize(request);
   return response;
 };
 

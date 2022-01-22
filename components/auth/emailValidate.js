@@ -7,13 +7,9 @@ import {
 } from 'react-native';
 import { Input, Button, Image } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
-import logo from '../../assets/icon.png';
 import { StatusBar } from 'expo-status-bar';
 import { Store } from '../../state/storeProvider';
-import {
-  validateEmailAction,
-  verifyEmailAction,
-} from '../../state/actions/auth/signUpEmail';
+import { iamClient } from '../../service/defaultServices.js';
 import { formStyles } from '../styles';
 import { getNextAuthScreen } from '../../helper/authScopeHelper';
 
@@ -34,7 +30,7 @@ export default ({ route, navigation }) => {
 
   React.useEffect(() => {
     const sendVerification = async () => {
-      await verifyEmailAction(bearerToken.tokenValue, dispatch);
+      await iamClient.signUpVerifyEmail(bearerToken.tokenValue, dispatch);
     };
 
     if (isResend) {
@@ -44,13 +40,11 @@ export default ({ route, navigation }) => {
     return () => {};
   }, []);
 
-  console.log('callInProgress' + callInProgress);
-  console.log('isResend:' + isResend);
   const onSubmit = async (data) => {
     try {
       const { code } = data;
 
-      const response = await validateEmailAction(
+      const response = await iamClient.signUpValidateEmail(
         code,
         bearerToken.tokenValue,
         dispatch

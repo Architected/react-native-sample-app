@@ -1,9 +1,8 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
@@ -12,22 +11,21 @@
     "@react-navigation/material-bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
-    "architected-client": "^1.0.1-beta.3",
-    "axios": "^0.21.1",
+    "architected-client": "beta",
+    "architected-crypto-helper-rn": "^1.0.1-beta.3",
     "expo": "~42.0.1",
-    "expo-crypto": "~9.2.0",
     "expo-image-picker": "~10.2.2",
     "expo-network": "~3.2.0",
-    "expo-random": "~11.2.0",
     "expo-secure-store": "~10.2.0",
     "expo-sharing": "~9.2.1",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.8.1",
     "react": "16.13.1",
     "react-combine-reducers": "^1.1.1",
     "react-dom": "16.13.1",
     "react-hook-form": "^7.14.2",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native": "~0.63.4",
     "react-native-cards": "^1.1.4",
     "react-native-dotenv": "^3.2.0",
     "react-native-elements": "^3.4.2",
@@ -36,11 +34,14 @@
     "react-native-paper": "^4.9.2",
     "react-native-reanimated": "^2.2.2",
     "react-native-screens": "^3.6.0",
+    "react-native-unimodules": "0.14.10",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
   },
-  "private": true
+  "private": true,
+  "name": "react-native-sample-app",
+  "version": "1.0.0"
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Store } from '../../state/storeProvider';
 import { getFromStore } from '../../helper/storeHelper';
-import * as authActionType from '../../state/constants/auth';
+import * as authActionType from 'architected-client/app-state/constants/iam';
 import PreAuthStackNavigator from '../navigators/preAuthStackNavigator';
 import DrawerNavigator from '../navigators/drawerNavigator';
 

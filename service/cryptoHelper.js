@@ -1,63 +1,58 @@
-import * as Crypto from 'expo-crypto';
-import { CryptoEncoding } from 'expo-crypto';
-import * as Random from 'expo-random';
+// import { Base64 } from 'crypto-es/lib/enc-base64.js';
+// import { SHA256 } from 'crypto-es/lib/sha256.js';
+// import uuid from 'react-native-uuid';
 
-const alphanumericCharacters =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+// const alphanumericCharacters =
+//   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
 
-export default class CryptoHelper {
-  constructor() {
-    this.generateCodeVerifier = this.generateCodeVerifier.bind(this);
-    this.generateChallenge = this.generateChallenge.bind(this);
-    this.generateRandomString = this.generateRandomString.bind(this);
-  }
+// export class CryptoHelper {
+//   constructor() {
+//     this.generateCodeVerifier = this.generateCodeVerifier.bind(this);
+//     this.generateChallenge = this.generateChallenge.bind(this);
+//     this.generateRandomString = this.generateRandomString.bind(this);
+//   }
 
-  generateCodeVerifier = async () => {
-    console.log('CryptoHelper:generateCodeVerifier:start:');
-    const code = await this.generateRandomString(100);
-    console.log('CryptoHelper:generateCodeVerifier:finish:' + code);
-    return code;
-  };
+//   generateCodeVerifier = () => {
+//     return this.generateRandomString(100);
+//   };
 
-  generateChallenge = async (value) => {
-    console.log('CryptoHelper:generateChallenge:start:');
-    const cryptoDigestOptions = { encoding: CryptoEncoding.BASE64 };
-    const digest = await Crypto.digestStringAsync(
-      Crypto.CryptoDigestAlgorithm.SHA256,
-      value,
-      cryptoDigestOptions
-    );
-    return digest;
-  };
+//   generateChallenge = (value) => {
+//     const digest = SHA256(value);
+//     return Base64.stringify(digest);
+//   };
 
-  generateRandomString = async (length) => {
-    console.log('CryptoHelper:generateRandomString:start:');
-    // Generating entropy is faster than complex math operations, so we use the simplest way
-    const characterCount = alphanumericCharacters.length;
-    const maxValidSelector =
-      Math.floor(0x10000 / characterCount) * characterCount - 1; // Using values above this will ruin distribution when using modular division
-    const entropyLength = 2 * Math.ceil(1.1 * length); // Generating a bit more than required so chances we need more than one pass will be really low
-    let string = '';
-    let stringLength = 0;
+//   convertToBytes = (val) => {
+//     const formattedString = val.replace('-', '');
+//     const valArray = new Uint8Array(formattedString.length);
+//     for (var i = 0; i < formattedString.length; i++) {
+//       console.log(
+//         'formattedString.charCodeAt(i):' + formattedString.charCodeAt(i)
+//       );
+//       valArray[i] = formattedString.charCodeAt(i);
+//     }
 
-    while (stringLength < length) {
-      // In case we had many bad values, which may happen for character sets of size above 0x8000 but close to it
-      const entropy = await Random.getRandomBytesAsync(entropyLength); // eslint-disable-line no-await-in-loop
-      let entropyPosition = 0;
+//     return valArray;
+//   };
 
-      while (entropyPosition < entropyLength && stringLength < length) {
-        const entropyValue = entropy[entropyPosition];
-        entropyPosition += 2;
-        if (entropyValue > maxValidSelector) {
-          // Skip values which will ruin distribution when using modular division
-          continue;
-        }
+//   generateRandomString = (requiredLength) => {
+//     const characterCount = alphanumericCharacters.length;
+//     let randomString = '';
+//     let stringLength = 0;
 
-        string += alphanumericCharacters[entropyValue % characterCount];
-        stringLength++;
-      }
-    }
+//     while (stringLength < requiredLength) {
+//       const newUuid = uuid.v4();
+//       console.log('newUuid:' + newUuid);
+//       let randomBytes = convertToBytes(newUuid);
+//       let position = 0;
 
-    return string;
-  };
-}
+//       while (position < 16 && stringLength < requiredLength) {
+//         randomString +=
+//           alphanumericCharacters[randomBytes[position] % characterCount];
+//         position++;
+//         stringLength++;
+//       }
+//     }
+
+//     return randomString;
+//   };
+// }

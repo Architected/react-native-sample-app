@@ -12,7 +12,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { StatusBar } from 'expo-status-bar';
 import { Store } from '../../state/storeProvider';
 import { formStyles } from '../styles';
-import { performAction } from '../../state/actions/auth/passwordReset';
+import { iamClient } from '../../service/defaultServices.js';
 
 export default ({ navigation }) => {
   const {
@@ -31,7 +31,7 @@ export default ({ navigation }) => {
   const onSubmit = async (data) => {
     const { newPassword, confirmPassword } = data;
     Keyboard.dismiss();
-    const response = await performAction(
+    const response = await iamClient.passwordResetPerform(
       newPassword,
       confirmPassword,
       dispatch,

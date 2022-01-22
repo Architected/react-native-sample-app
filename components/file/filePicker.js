@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Store } from '../../state/storeProvider';
-import { getAllFiles, uploadFileAction } from '../../state/actions/file';
-import * as fileActionType from '../../state/constants/file';
+import { fileClient } from '../../service/defaultServices';
+import * as fileActionType from 'architected-client/app-state/constants/file';
 import { getError } from '../../helper/getError';
 
 export default function FilePicker({ navigation }) {
@@ -76,7 +76,7 @@ export default function FilePicker({ navigation }) {
     };
 
     setUploadingImage(true);
-    const responseData = await uploadFileAction(
+    const responseData = await fileClient.uploadFile(
       data,
       dispatch,
       bearerToken.tokenValue
@@ -85,7 +85,7 @@ export default function FilePicker({ navigation }) {
     console.log('responseData:' + JSON.stringify(responseData));
 
     if (!responseData.inError) {
-      await getAllFiles(dispatch, bearerToken.tokenValue);
+      await fileClient.getAllFiles(dispatch, bearerToken.tokenValue);
       setUploadingImage(false);
       navigation.navigate('FileList');
     } else {

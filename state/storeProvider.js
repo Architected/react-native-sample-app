@@ -1,8 +1,17 @@
 import React from 'react';
 import combineReducers from 'react-combine-reducers';
-import { authReducer, initialAuthState } from './reducers/auth';
-import { fileReducer, initialFileState } from './reducers/file';
-import { globalReducer, initialGlobalState } from './reducers/global';
+import {
+  authReducer,
+  initialAuthState,
+} from 'architected-client/app-state/reducers/iam.js';
+import {
+  fileReducer,
+  initialFileState,
+} from 'architected-client/app-state/reducers/file.js';
+import {
+  profileReducer,
+  initialProfileState,
+} from 'architected-client/app-state/reducers/profile.js';
 
 export const Store = React.createContext();
 
@@ -10,7 +19,7 @@ export function StoreProvider(props) {
   const [storeReducer, initialState] = combineReducers({
     auth: [authReducer, initialAuthState],
     file: [fileReducer, initialFileState],
-    global: [globalReducer, initialGlobalState],
+    profile: [profileReducer, initialProfileState],
   });
 
   const [state, dispatch] = React.useReducer(storeReducer, initialState);

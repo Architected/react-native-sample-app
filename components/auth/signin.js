@@ -11,7 +11,7 @@ import { Input, Button } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
 import { StatusBar } from 'expo-status-bar';
 import { Store } from '../../state/storeProvider';
-import { signInAction } from '../../state/actions/auth/signInEmail';
+import { iamClient } from '../../service/defaultServices.js';
 import { formStyles } from '../styles';
 import { saveToStore } from '../../helper/storeHelper';
 import { getNextAuthScreen } from '../../helper/authScopeHelper';
@@ -36,9 +36,9 @@ export default ({ navigation }) => {
       const { email, password } = data;
       const clientDetails = await getClientDetails();
       Keyboard.dismiss();
-      const response = await signInAction(
-        email,
-        password,
+      const requestData = { email, password };
+      const response = await iamClient.signIn(
+        requestData,
         clientDetails,
         dispatch
       );
@@ -138,13 +138,6 @@ export default ({ navigation }) => {
           >
             Sign Up
           </Text>
-          {/* <Button
-            containerStyle={formStyles.button}
-            onPress={() => navigation.navigate('SignUp')}
-            type="outline"
-            title="Sign Up"
-          /> */}
-
           {errorMessage && (
             <Text style={formStyles.errorText}>{errorMessage}</Text>
           )}
